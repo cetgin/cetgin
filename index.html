@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="tr" class="w-mod-js w-mod-touch">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <link href="./index_files/main.css" rel="stylesheet" type="text/css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+
+  <link href="./index_files/alt.png" rel="shortcut icon" type="image/x-icon">
+  <link href="./index_files/alt.png" rel="apple-touch-icon">
+
+  <style>
+    img.shake {
+      width: 80px; height: 80px;
+      display: inline-block;
+      transition: transform 0.15s ease;
+      transform-origin: 50% 50%;
+    }
+    img.shake:hover { animation: wobble 0.6s ease-in-out infinite; }
+    @keyframes wobble {
+      0% { transform: rotate(0deg) translateZ(0); }
+      15% { transform: rotate(3deg); }
+      30% { transform: rotate(-3.5deg); }
+      45% { transform: rotate(2.5deg); }
+      60% { transform: rotate(-2deg); }
+      75% { transform: rotate(1.2deg); }
+      100% { transform: rotate(0deg); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      img.shake, img.shake:hover { animation: none !important; transition: none !important; }
+    }
+  </style>
+
+  <style>
+    img.zoom {
+      width: 110px; height: 110px;
+      display: inline-block;
+      transform-origin: center center;
+    }
+    img.zoom:hover { animation: zoomInOut 0.8s ease-in-out infinite alternate; }
+    @keyframes zoomInOut { from { transform: scale(1); } to { transform: scale(1.2); } }
+    @media (prefers-reduced-motion: reduce) { img.zoom, img.zoom:hover { animation: none !important; } }
+  </style>
+
+  <style>
+    body { text-align: center; margin-top: 50px; }
+    img.confetti { width: 90px; height: 90px; cursor: pointer; }
+  </style>
+
+  <style>
+    .swap { position: relative; width: 100px; height: 100px; }
+    .swap img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: contain;
+      transition: opacity .25s ease;
+      display: block;
+    }
+    .swap img.alt { opacity: 1; }
+    .swap img.ust { opacity: 0; }
+    .swap:hover img.alt { opacity: 0; }
+    .swap:hover img.ust { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) { .swap img { transition: none; } }
+  </style>
+
+  <style>
+    .tv-box {
+      --fx-w: 70%;
+      --fx-h: 60%;
+      --scan-speed: 0.6s;
+      --band-speed: 1.1s;
+      --jitter: 0.6px;
+      position: relative;
+      width: 145px;
+      height: 115px;
+      overflow: hidden;
+      border-radius: 28px;
+      display: inline-block;
+    }
+    .tv-box img {
+      width: 115px;
+      height: 78px;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      position: relative;
+      z-index: 1;
+      transition: filter .2s ease;
+    }
+    .tv-box::before, .tv-box::after {
+      content: "";
+      position: absolute;
+      width: var(--fx-w);
+      height: var(--fx-h);
+      left: 42%;
+      top: 39%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      opacity: 0;
+      z-index: 3;
+      border-radius: 12px;
+    }
+    .tv-box::before {
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.15) 0px,
+        rgba(0,0,0,0.15) 1px,
+        rgba(0,0,0,0)    3px
+      );
+      mix-blend-mode: multiply;
+    }
+    .tv-box::after {
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.25) 50%,
+        rgba(255,255,255,0) 100%
+      );
+      filter: blur(2px);
+    }
+    .tv-box:hover img { filter: contrast(1.08) saturate(1.08); }
+    .tv-box:hover::before {
+      opacity: 1;
+      animation: scan var(--scan-speed) linear infinite, jitter 120ms steps(2) infinite;
+    }
+    .tv-box:hover::after {
+      opacity: .6;
+      animation: vhold var(--band-speed) linear infinite, jitter 120ms steps(2) infinite;
+    }
+    @keyframes scan { from { background-position: 0 0; } to { background-position: 0 6px; } }
+    @keyframes vhold {
+      0% { transform: translate(-50%, calc(-50% - 120%)); }
+      100% { transform: translate(-50%, calc(-50% + 220%)); }
+    }
+    @keyframes jitter {
+      0% { transform: translate(calc(-50% - var(--jitter)), calc(-50%)); }
+      100% { transform: translate(calc(-50% + var(--jitter)), calc(-50%)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tv-box:hover::before, .tv-box:hover::after { animation: none !important; }
+    }
+  </style>
+
+  <title>Gökhan Çetgin</title>
+</head>
+
+<body>
+
+  <header id="hero" class="section home-hero">
+    <div class="container home w-container">
+      <div class="hero-text-wrapper">
+
+        <div class="swap" aria-label="Görsel üzerine gelince değişir">
+          <img class="alt" src="./index_files/alt.png" alt="Normal görüntü">
+          <img class="ust" src="./index_files/ust.png" alt="Hover görüntüsü" loading="eager">
+        </div>
+
+        <div class="hero-title">Merhaba,</div>
+        <div class="hero-title">ben</div>
+        <div class="hero-title">Gökhan Çetgin</div>
+
+        <div class="tv-box">
+          <a href="https://www.youtube.com/@cetgin" target="_blank" rel="noopener">
+            <img style="width:106px; height:74px;" src="./index_files/64d4b2a9cccc27a458342d60_rh-pill.png" loading="lazy" alt="YouTube">
+          </a>
+        </div>
+
+        <div class="hero-title part-1" style="color:#cfcfcf;">YouTube kanalım</div>
+        <div class="hero-title part-1" style="color:#cfcfcf;">
+          <a href="https://www.youtube.com/@cetgin" target="_blank" rel="noopener">Gökhan’la Teknoloji</a>
+        </div>
+        <div class="hero-title part-1" style="color:#cfcfcf;">üzerinden</div>
+        <div class="hero-title part-1" style="color:#cfcfcf;">teknoloji ürünlerini</div>
+        <div class="hero-title part-1" style="color:#cfcfcf;">inceliyor,</div>
+
+        <div class="hero-title part-2" style="color:#cfcfcf;">Home Assistant</div>
+        <img class="zoom" src="./index_files/homeassistant.png" loading="lazy" alt="Home Assistant">
+        <div class="hero-title part-2" style="color:#cfcfcf;">ve akıllı ev çözümleri</div>
+        <div class="hero-title part-2" style="color:#cfcfcf;">üzerine</div>
+        <div class="hero-title part-2" style="color:#cfcfcf;">içerikler üretiyorum.</div>
+
+        <img class="shake" src="./index_files/64d4bc601e74bea9f1ada2fe_seedling_1f331.png" loading="lazy" alt="" height="84">
+
+        <div class="hero-title part-2" style="color:#cfcfcf;">Amacım,</div>
+        <div class="hero-title part-3" style="color:#cfcfcf;">karmaşık görünen</div>
+        <div class="hero-title part-3" style="color:#cfcfcf;">teknolojiyi</div>
+        <div class="hero-title part-4" style="color:#cfcfcf;">herkes için</div>
+        <div class="hero-title part-4" style="color:#cfcfcf;">anlaşılır</div>
+        <div class="hero-title part-4" style="color:#cfcfcf;">ve keyifli hale getirmek.</div>
+
+        <img class="confetti" src="./index_files/64d4bc79600bd67e51adc974_party-popper_1f389.png" loading="lazy" alt="Kutlama">
+      </div>
+    </div>
+  </header>
+
+  <div class="home-office-img-wrapper">
+    <img
+      src="./index_files/alt1.png"
+      loading="lazy"
+      sizes="(max-width: 2048px) 100vw, 2048px"
+      alt=""
+      srcset="
+        ./index_files/alt1.png 500w,
+        ./index_files/alt1.png 800w,
+        ./index_files/alt1.png 1080w,
+        ./index_files/alt1.png 1600w,
+        ./index_files/alt1.png 2000w,
+        ./index_files/alt1.png 2048w
+      "
+      class="home-office-img"
+    >
+  </div>
+
+  <div class="thanks-bottom">
+    <div>Umarım sitemi beğenmişsinizdir<br>ve sizlere faydası olmuştur.</div>
+    <div class="signature">Gökhan Çetgin</div>
+  </div>
+
+  <!-- Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    const img = document.querySelector('.confetti');
+    let intervalId = null;
+
+    function shootConfettiOverImage() {
+      if (!img) return;
+      const rect = img.getBoundingClientRect();
+      const x = (rect.left + rect.right) / 2 / window.innerWidth;
+      const y = (rect.top + rect.bottom) / 2 / window.innerHeight;
+
+      confetti({
+        particleCount: 40,
+        spread: 70,
+        origin: { x, y },
+        colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00']
+      });
+    }
+
+    if (img) {
+      img.addEventListener('mouseenter', () => {
+        if (!intervalId) {
+          shootConfettiOverImage();
+          intervalId = setInterval(shootConfettiOverImage, 800);
+        }
+      });
+
+      img.addEventListener('mouseleave', () => {
+        clearInterval(intervalId);
+        intervalId = null;
+      });
+    }
+  </script>
+
+</body>
+</html>
